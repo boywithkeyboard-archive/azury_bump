@@ -1,9 +1,4 @@
-## bump
+#### Upgradedndencies:
 
-### Supported Imports
-
-- `https://deno.land`
-- `https://deno.gg`
-- `https://esm.sh`
-- `https://raw.githubusercontent.com`
-- `npm:`
+* [**awsm**]() × `v56.2.1`
+* [**awsm**]() × `v56.2.1`
