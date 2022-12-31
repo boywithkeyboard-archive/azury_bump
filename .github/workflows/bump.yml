@@ -33,5 +33,6 @@ jobs:
           commit-message: 'bump dependencies'
           body: '${{ env.CHANGELOG }}'
           labels: 'dependencies'
+          reviewers: 'unvented'
           delete-branch: true
           branch: 'bump'
