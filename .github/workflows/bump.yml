@@ -18,7 +18,7 @@ jobs:
 
       - name: 'bump dependencies'
         run: |
-          deno run -A https://raw.githubusercontent.com/azurystudio/bump/e7bd6f6/mod.ts -i ./createMarkdown.ts
+          deno run -A https://raw.githubusercontent.com/azurystudio/bump/fa2a921/mod.ts -i ./createMarkdown.ts
           echo "CHANGELOG=$(cat dependencies_changelog.md)" >> $GITHUB_ENV
           rm dependencies_changelog.md
 
