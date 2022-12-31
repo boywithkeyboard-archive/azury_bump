@@ -6,7 +6,6 @@ export const fetchUpdates = async (imports: Imports): Promise<Updates> => {
   const updates: Updates = []
 
   for (const i of imports) {
-    console.log(i)
     const url = i.url.replace('https://', '')
 
     if (i.url.startsWith('https://esm.sh')) {
