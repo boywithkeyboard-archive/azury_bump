@@ -4,10 +4,18 @@ import log from './log.ts'
 import { join } from 'https://deno.land/std@v0.167.0/path/mod.ts'
 import { updateImports } from './updateImports.ts'
 import { createMarkdown } from './createMarkdown.ts'
+import { parse } from 'https://deno.land/std@0.167.0/flags/mod.ts'
 
 const bump = async () => {
+  const args = parse(Deno.args)
+
+  let ignore: string[] = []
+
+  if (args.i)
+    ignore = args.i.split(',')
+
   await log('determining imports...')
-  const imports = await getImports(Deno.cwd())
+  const imports = await getImports(Deno.cwd(), ignore)
 
   await log('fetching updates...')
   const updates = await fetchUpdates(imports)

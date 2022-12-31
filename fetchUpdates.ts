@@ -18,7 +18,7 @@ export const fetchUpdates = async (imports: Imports): Promise<Updates> => {
       const fromVersion = scopedPackage ? (
         url.split('/')[2].split('@')[1]
       ) : (
-				url.split('/')[1].split('@')[1]
+        url.split('/')[1].split('@')[1]
       )
 
       if (scopedPackage)
