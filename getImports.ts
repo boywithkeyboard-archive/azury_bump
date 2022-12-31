@@ -15,7 +15,9 @@ export const getImports = async (dir: string, ignore: string[]): Promise<Imports
     if (!urls)
       continue
 
-    for (const url of urls)
+    for (let url of urls) {
+      url = url.replace('\'', '')
+
       if (
         (
           url.startsWith('https://esm.sh') ||
@@ -23,14 +25,17 @@ export const getImports = async (dir: string, ignore: string[]): Promise<Imports
           url.startsWith('https://deno.land')
         )
         && !url.includes('${')
+        && !url.includes(')')
         && url !== 'https://esm.sh'
         && url !== 'https://deno.gg'
         && url !== 'https://deno.land'
+        && url !== 'https://deno.land/x'
       )
         imports.push({
-          url: url.replace('\'', ''),
+          url,
           file
         })
+    }
   }
 
   return imports
