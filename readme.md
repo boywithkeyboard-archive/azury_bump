@@ -23,8 +23,11 @@ jobs:
 
       - name: 'bump dependencies'
         run: |
-          deno run -A https://deno.gg/bump@v0.1.0
-          echo "CHANGELOG=$(cat dependencies_changelog.md)" >> $GITHUB_ENV
+          deno run -A https://deno.gg/bump@v0
+          CHANGELOG=$(cat dependencies_changelog.md)
+          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
+          echo "$CHANGELOG" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
           rm dependencies_changelog.md
 
       - name: 'create pull request'
