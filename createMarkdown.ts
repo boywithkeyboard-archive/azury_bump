@@ -18,7 +18,7 @@ export const createMarkdown = (updates: Updates) => {
     for (const update of sortedUpdates) {
       const exists = filteredUpdates.get(update.package)
 
-      if (exists && lte(exists.fromVersion.replace('v', ''), update.fromVersion.replace('v', '')))
+      if ((exists && lte(exists.fromVersion.replace('v', ''), update.fromVersion.replace('v', ''))) || !exists)
         filteredUpdates.set(update.package, update)
     }
 
