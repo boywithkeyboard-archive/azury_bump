@@ -1,0 +1,33 @@
+name: 'bump'
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  bump:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      - uses: 'actions/checkout@v3'
+
+      - uses: 'denoland/setup-deno@v1'
+        with:
+          deno-version: 'v1.x'
+
+      - name: 'bump dependencies'
+        run: |
+          deno run -A https://raw.githubusercontent.com/azurystudio/bump/200268d/mod.ts
+          echo "CHANGELOG=$(cat dependencies_changelog.md)" >> $GITHUB_ENV
+          rm dependencies_changelog.md
+
+      - name: 'create pull request'
+        uses: 'peter-evans/create-pull-request@v4.2.3'
+        with:
+          title: 'bump dependencies'
+          author: 'GitHub <noreply@github.com>'
+          commit-message: 'bump dependencies'
+          body: '${{ env.CHANGELOG }}'
+          labels: 'dependencies'
+          delete-branch: true
+          branch: 'bump'
