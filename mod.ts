@@ -14,6 +14,8 @@ const bump = async () => {
   if (args.i)
     ignore = args.i.split(',')
 
+  ignore = ignore.map(i => join(Deno.cwd(), i))
+
   await log('determining imports...')
   const imports = await getImports(Deno.cwd(), ignore)
 
