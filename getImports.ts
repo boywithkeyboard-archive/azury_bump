@@ -23,6 +23,9 @@ export const getImports = async (dir: string, ignore: string[]): Promise<Imports
           url.startsWith('https://deno.land')
         )
         && !url.includes('${')
+        && url !== 'https://esm.sh'
+        && url !== 'https://deno.gg'
+        && url !== 'https://deno.land'
       )
         imports.push({
           url: url.replace('\'', ''),
