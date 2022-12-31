@@ -1,6 +1,6 @@
 ## bump
 
-### Add this workflow to your repository to bump your dependencies:
+#### Add this workflow to your repository to bump your dependencies:
 
 ```
 name: 'bump'
