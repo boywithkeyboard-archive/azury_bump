@@ -2,7 +2,7 @@ import { registries } from './registries.ts'
 import type { Updates } from './Updates.d.ts'
 
 export const createMarkdown = (updates: Updates) => {
-  const packages: string[] = []
+  const packages = new Map<string, string>()
 
   let markdown = '### bump:\n'
 
@@ -13,7 +13,7 @@ export const createMarkdown = (updates: Updates) => {
     markdown += `\n- **${registry}**\n\n`
 
     for (const update of updates.filter(update => update.registry === registry).sort((a, b) => a.package.localeCompare(b.package))) {
-      if (packages.includes(update.package))
+      if (packages.has(update.package))
         continue
 
       const packageLink = (registry === 'deno.land' && update.package === 'std')
@@ -36,7 +36,7 @@ export const createMarkdown = (updates: Updates) => {
 
       markdown += `  - [**${update.package}**](${packageLink}) × [\`${update.fromVersion}\`](${fromVersionLink}) » [\`${update.toVersion}\`](${toVersionLink}) ${update.breaking ? '⚠️' : ''}\n`
 
-      packages.push(update.package)
+      packages.set(update.package, update.toVersion)
     }
   }
 
