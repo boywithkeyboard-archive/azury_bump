@@ -2,7 +2,7 @@
 
 Add this workflow to your repository to bump your dependencies.
 
-```yaml
+```
 name: 'bump'
 
 on:
