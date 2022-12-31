@@ -1,9 +1,8 @@
 import { registries } from './registries.ts'
-import type { Updates } from './Updates.d.ts'
+import type { Update, Updates } from './Updates.d.ts'
+import { lte } from 'https://deno.land/std@0.167.0/semver/mod.ts'
 
 export const createMarkdown = (updates: Updates) => {
-  const packages = new Map<string, string>()
-
   let markdown = '### bump:\n'
 
   for (const registry of registries) {
@@ -12,10 +11,18 @@ export const createMarkdown = (updates: Updates) => {
 
     markdown += `\n- **${registry}**\n\n`
 
-    for (const update of updates.filter(update => update.registry === registry).sort((a, b) => a.package.localeCompare(b.package))) {
-      if (packages.has(update.package))
-        continue
+    const sortedUpdates = updates.filter(update => update.registry === registry).sort((a, b) => a.package.localeCompare(b.package))
 
+    const filteredUpdates = new Map<string, Update>()
+
+    for (const update of sortedUpdates) {
+      const exists = filteredUpdates.get(update.package)
+
+      if (exists && lte(exists.fromVersion.replace('v', ''), update.fromVersion.replace('v', '')))
+        filteredUpdates.set(update.package, update)
+    }
+
+    for (const update of filteredUpdates.values()) {
       const packageLink = (registry === 'deno.land' && update.package === 'std')
         ? `https://deno.land/std`
         : registry === 'deno.land' ? `https://deno.land/x/${update.package}`
@@ -35,8 +42,6 @@ export const createMarkdown = (updates: Updates) => {
         : `https://npmjs.com/package/${update.package}/v/${update.toVersion}`
 
       markdown += `  - [**${update.package}**](${packageLink}) × [\`${update.fromVersion}\`](${fromVersionLink}) » [\`${update.toVersion}\`](${toVersionLink}) ${update.breaking ? '⚠️' : ''}\n`
-
-      packages.set(update.package, update.toVersion)
     }
   }
 

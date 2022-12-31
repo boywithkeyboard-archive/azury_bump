@@ -1,4 +1,4 @@
-export type Updates = {
+export type Update = {
   registry: string
   package: string
   file: string
@@ -7,4 +7,6 @@ export type Updates = {
   fromUrl: string
   toUrl: string
   breaking: boolean
-}[]
+}
+
+export type Updates = Update[]
