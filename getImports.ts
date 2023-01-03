@@ -6,7 +6,7 @@ export const getImports = async (dir: string, ignore: string[]): Promise<Imports
   const imports = []
   
   for await (const file of files(dir)) {
-    if (!file.endsWith('.ts') || ignore.includes(file)) continue
+    if ((!file.endsWith('.ts') && !file.endsWith('.json')) || ignore.includes(file)) continue
 
     const content = await Deno.readTextFile(file)
 
