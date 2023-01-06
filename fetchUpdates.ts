@@ -1,4 +1,4 @@
-import { difference } from 'https://deno.land/std@v0.170.0/semver/mod.ts'
+import { difference } from 'https://deno.land/std@v0.171.0/semver/mod.ts'
 import type { Imports } from './Imports.d.ts'
 import type { Updates } from './Updates.d.ts'
 
