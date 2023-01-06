@@ -1,10 +1,10 @@
 import { getImports } from './getImports.ts'
 import { fetchUpdates } from './fetchUpdates.ts'
 import log from './log.ts'
-import { join } from 'https://deno.land/std@v0.170.0/path/mod.ts'
+import { join } from 'https://deno.land/std@v0.171.0/path/mod.ts'
 import { updateImports } from './updateImports.ts'
 import { createMarkdown } from './createMarkdown.ts'
-import { parse } from 'https://deno.land/std@v0.170.0/flags/mod.ts'
+import { parse } from 'https://deno.land/std@v0.171.0/flags/mod.ts'
 
 const bump = async () => {
   const args = parse(Deno.args)
