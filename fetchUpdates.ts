@@ -33,7 +33,7 @@ export const fetchUpdates = async (imports: Imports): Promise<Updates> => {
 
       const toVersion = json['dist-tags'].latest
 
-      if (fromVersion === toVersion)
+      if (fromVersion === toVersion || toVersion.includes('rc') || toVersion.includes('beta') || toVersion.includes('alpha'))
         continue
 
       const toUrl = i.url
@@ -69,7 +69,7 @@ export const fetchUpdates = async (imports: Imports): Promise<Updates> => {
 
       const toVersion = json.latestVersion
 
-      if (fromVersion === toVersion)
+      if (fromVersion === toVersion || toVersion.includes('rc') || toVersion.includes('beta') || toVersion.includes('alpha'))
         continue
 
       const toUrl = i.url
@@ -105,7 +105,7 @@ export const fetchUpdates = async (imports: Imports): Promise<Updates> => {
 
       const toVersion = json.latest_version.startsWith('v') ? json.latest_version : `v${json.latest_version}`
 
-      if (fromVersion === toVersion)
+      if (fromVersion === toVersion || toVersion.includes('rc') || toVersion.includes('beta') || toVersion.includes('alpha'))
         continue
 
       const toUrl = i.url
@@ -139,7 +139,7 @@ export const fetchUpdates = async (imports: Imports): Promise<Updates> => {
 
       const toVersion = json.latest_version.startsWith('v') ? json.latest_version : `v${json.latest_version}`
 
-      if (fromVersion === toVersion)
+      if (fromVersion === toVersion || toVersion.includes('rc') || toVersion.includes('beta') || toVersion.includes('alpha'))
         continue
 
       const toUrl = i.url
