@@ -3,7 +3,7 @@ import registries from './registries.ts'
 import type { Import } from './Import.d.ts'
 import type { Update } from './Update.d.ts'
 
-export async function* fetchUpdates(iterator: AsyncIterableIterator<Import>): AsyncIterableIterator<Update> {
+export async function* createUpdates(iterator: AsyncIterableIterator<Import>): AsyncIterableIterator<Update> {
   for await (const item of iterator) {
     try {
       const registry = registries.filter(registry => item.url.startsWith(registry.prefix))[0]

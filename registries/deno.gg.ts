@@ -15,5 +15,14 @@ export default new Registry({
       throw new Error()
 
     return (await res.json()).latestVersion
+  },
+  getPackageUrl(name) {
+    return `https://deno.gg/~${name}`
+  },
+  getCurrentVersionUrl(name, version) {
+    return `https://deno.gg/${name}@${version}?plain`
+  },
+  getNextVersionUrl(name, version) {
+    return `https://deno.gg/${name}@${version}?plain`
   }
 })

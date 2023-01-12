@@ -3,7 +3,7 @@ import { readFiles } from './readFiles.ts'
 import registries from './registries.ts'
 import type { Import } from './Import.d.ts'
 
-export async function* analyze(directory: string, ignore: string[]): AsyncIterableIterator<Import> {
+export async function* analyze(directory: string, ignore: string[] = []): AsyncIterableIterator<Import> {
   for await (const file of readFiles(directory)) {
     if (!file.endsWith('.ts') && !file.endsWith('.json') || ignore.includes(file))
       continue

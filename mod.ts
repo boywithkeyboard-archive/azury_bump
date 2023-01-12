@@ -1,36 +1,25 @@
-import { getImports } from './getImports.ts'
-import { fetchUpdates } from './fetchUpdates.ts'
-import log from './log.ts'
-import { join } from 'https://deno.land/std@v0.171.0/path/mod.ts'
-import { updateImports } from './updateImports.ts'
-import { createMarkdown } from './createMarkdown.ts'
 import { parse } from 'https://deno.land/std@v0.171.0/flags/mod.ts'
+import { join } from 'https://deno.land/std@v0.171.0/path/mod.ts'
+import { analyze } from './analyze.ts'
+import { createMarkdown } from './createMarkdown.ts'
+import { createUpdates } from './createUpdates.ts'
+import { update } from './update.ts'
 
-const bump = async () => {
+async function cli() {
   const args = parse(Deno.args)
 
-  let ignore: string[] = []
+  , ignore = args.i ? args.i.split(',').map((i: string) => join(Deno.cwd(), i)) : []
 
-  if (args.i)
-    ignore = args.i.split(',')
+  , updates = createUpdates(analyze(Deno.cwd(), ignore))
+  , markdown = await createMarkdown(updates)
 
-  ignore = ignore.map(i => join(Deno.cwd(), i))
+  await update(updates)
 
-  await log('determining imports...')
-  const imports = await getImports(Deno.cwd(), ignore)
-
-  await log('fetching updates...')
-  const updates = await fetchUpdates(imports)
-  
-  await log('updating imports...')
-  await updateImports(updates)
-
-  await log('generating changelog...')
   await Deno.create(join(Deno.cwd(), './dependencies_changelog.md'))
-  await Deno.writeTextFile(join(Deno.cwd(), './dependencies_changelog.md'), createMarkdown(updates))
+  await Deno.writeTextFile(join(Deno.cwd(), './dependencies_changelog.md'), markdown)
 
   Deno.exit()
 }
 
 if (import.meta.main)
-  bump()
+  cli()

@@ -1,50 +1,39 @@
-import { registries } from './registries.ts'
-import type { Update, Updates } from './Updates.d.ts'
-import { lte } from 'https://deno.land/std@0.167.0/semver/mod.ts'
+import { lte } from 'https://deno.land/std@v0.171.0/semver/mod.ts'
+import registries from './registries.ts'
+import type { Update } from './Update.d.ts'
 
-export const createMarkdown = (updates: Updates) => {
+export async function createMarkdown(updates: AsyncIterableIterator<Update>) {
   let markdown = '### bump:\n'
 
-  for (const registry of registries) {
-    if (updates.filter(update => update.registry === registry).length === 0)
-      continue
+  const sortedUpdates: Record<string, Update[]> = {}
 
-    markdown += `\n- **${registry}**\n\n`
+  for await (const update of updates)
+    sortedUpdates[update.registry].push(update)
 
-    const sortedUpdates = updates.filter(update => update.registry === registry).sort((a, b) => a.package.localeCompare(b.package))
+  // filter out duplicates
+  for (const updates of Object.values(sortedUpdates)) {
+    const filteredUpdates: Update[] = []
 
-    const filteredUpdates = new Map<string, Update>()
-
-    for (const update of sortedUpdates) {
-      const exists = filteredUpdates.get(update.package)
-
-      console.log(update.fromVersion)
+    for (const update of updates) {
+      const exists = filteredUpdates.find(item => item.package === update.package)
 
       if ((exists && !lte(exists.fromVersion.replace('v', ''), update.fromVersion.replace('v', ''))) || !exists)
-        filteredUpdates.set(update.package, update)
+        filteredUpdates.push(update)
     }
+  }
 
-    for (const update of filteredUpdates.values()) {
-      const packageLink = (registry === 'deno.land' && update.package === 'std')
-        ? `https://deno.land/std`
-        : registry === 'deno.land' ? `https://deno.land/x/${update.package}`
-        : registry === 'deno.gg' ? `https://deno.gg/~${update.package}`
-        : `https://npmjs.com/package/${update.package}`
+  // sort packages alphabetically
+  for (const [key, value] of Object.entries(sortedUpdates))
+    sortedUpdates[key] = value.sort((a, b) => a.package.localeCompare(b.package))
 
-      const fromVersionLink = (registry === 'deno.land' && update.package === 'std')
-        ? `https://deno.land/std@${update.fromVersion}`
-        : registry === 'deno.land' ? `https://deno.land/x/${update.package}@${update.fromVersion}`
-        : registry === 'deno.gg' ? `https://deno.gg/~${update.package}@${update.fromVersion}`
-        : `https://npmjs.com/package/${update.package}/v/${update.fromVersion}`
+  // create markdown
+  for (const [registryName, updates] of Object.entries(sortedUpdates)) {
+    markdown += `\n- **${registryName}**\n\n`
 
-      const toVersionLink = (registry === 'deno.land' && update.package === 'std')
-        ? `https://deno.land/std@${update.toVersion}`
-        : registry === 'deno.land' ? `https://deno.land/x/${update.package}@${update.toVersion}`
-        : registry === 'deno.gg' ? `https://deno.gg/~${update.package}@${update.toVersion}`
-        : `https://npmjs.com/package/${update.package}/v/${update.toVersion}`
+    const registry = registries.filter(registry => registry.name === registryName)[0]
 
-      markdown += `  - [**${update.package}**](${packageLink}) × [\`${update.fromVersion}\`](${fromVersionLink}) » [\`${update.toVersion}\`](${toVersionLink}) ${update.breaking ? '⚠️' : ''}\n`
-    }
+    for (const update of updates)
+      markdown += `  - [**${update.package}**](${registry.getPackageUrl(update.package)}) × [\`${update.fromVersion}\`](${registry.getCurrentVersionUrl(update.package, update.fromVersion)}) » [\`${update.toVersion}\`](${registry.getNextVersionUrl(update.package, update.toVersion)}) ${update.breaking ? '⚠️' : ''}\n`
   }
 
   return markdown
