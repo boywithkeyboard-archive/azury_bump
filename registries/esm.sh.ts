@@ -15,13 +15,11 @@ export default new Registry({
   getCurrentVersion(url) {
     const scopedPackage = url.split('/')[1].split('@')[0].length === 0
 
-    const version = scopedPackage ? (
+    return scopedPackage ? (
       url.split('/')[2].split('@')[1]
     ) : (
       url.split('/')[1].split('@')[1]
     )
-
-    return version
   },
   async getNextVersion(name) {
     const res = await fetch(`https://registry.npmjs.org/${name}`)
