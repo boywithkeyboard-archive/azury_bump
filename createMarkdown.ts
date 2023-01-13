@@ -1,4 +1,4 @@
-import { lte } from 'https://deno.land/std@v0.171.0/semver/mod.ts'
+import { gte, lte } from 'https://deno.land/std@v0.172.0/semver/mod.ts'
 import registries from './registries.ts'
 import type { Update } from './Update.d.ts'
 
@@ -19,13 +19,14 @@ export function createMarkdown(updates: Update[]) {
 
     for (const update of updates) {
       const exists = filteredUpdates.find(item => item.package === update.package)
+      const existsIndex = filteredUpdates.findIndex(item => item.package === update.package)
 
       if (exists) {
-        update.fileCount = filteredUpdates[filteredUpdates.findIndex(item => item.package === update.package)].fileCount + 1
-        update.fromVersion = lte(exists.fromVersion.replace('v', ''), update.fromVersion.replace('v', '')) ? exists.fromVersion : update.fromVersion // select the lowest version
-        update.toVersion = lte(exists.fromVersion.replace('v', ''), update.fromVersion.replace('v', '')) ? update.toVersion : exists.toVersion // select the highest version
+        update.fileCount = exists.file === update.file ? filteredUpdates[existsIndex].fileCount : (filteredUpdates[existsIndex].fileCount + 1)
+        update.fromVersion = gte(exists.fromVersion.replace('v', ''), update.fromVersion.replace('v', '')) ? update.fromVersion : exists.fromVersion // select the lowest version
+        update.toVersion = lte(exists.toVersion.replace('v', ''), update.toVersion.replace('v', '')) ? update.toVersion : exists.toVersion // select the highest version
 
-        filteredUpdates[filteredUpdates.findIndex(item => item.package === update.package)] = update
+        filteredUpdates[existsIndex] = update
       } else {
         filteredUpdates.push(update)
       }
