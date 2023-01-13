@@ -6,4 +6,5 @@ export type Update = {
   toVersion: string
   url: string
   breaking: boolean
+  fileCount: number
 }

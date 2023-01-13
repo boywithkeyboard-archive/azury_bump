@@ -10,8 +10,8 @@ export async function* analyze(directory: string, ignore: string[] = []): AsyncI
 
     const content = await Deno.readTextFile(file)
 
-    for (let url of content.match(regex()) ?? []) {
-      url = url.replace('\'', '')
+    for (let url of (content.match(regex()) ?? [])) {
+      url = url.replace('\'', '').replace(')', '')
 
       if (url.includes('${'))
         continue
@@ -20,7 +20,7 @@ export async function* analyze(directory: string, ignore: string[] = []): AsyncI
         if (url === `https://${registry.prefix}`)
           continue
 
-      if (!registries.some(registry => url.startsWith(`https://${registry}`)))
+      if (!registries.some(registry => url.startsWith(`https://${registry.prefix}`)))
         continue
 
       yield {

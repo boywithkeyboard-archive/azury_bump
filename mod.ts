@@ -10,13 +10,13 @@ async function cli() {
 
   , ignore = args.i ? args.i.split(',').map((i: string) => join(Deno.cwd(), i)) : []
 
-  , updates = createUpdates(analyze(Deno.cwd(), ignore))
-  , markdown = await createMarkdown(updates)
+  , imports = analyze(Deno.cwd(), ignore)
+  , updates = await createUpdates(imports)
 
   await update(updates)
 
   await Deno.create(join(Deno.cwd(), './dependencies_changelog.md'))
-  await Deno.writeTextFile(join(Deno.cwd(), './dependencies_changelog.md'), markdown)
+  await Deno.writeTextFile(join(Deno.cwd(), './dependencies_changelog.md'), createMarkdown(updates))
 
   Deno.exit()
 }
