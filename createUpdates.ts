@@ -4,7 +4,8 @@ import type { Update } from './Update.d.ts'
 import type { Import } from './Import.d.ts'
 
 export async function createUpdates(imports: AsyncIterableIterator<Import>): Promise<Update[]> {
-  const updates: Update[] = []
+  const cache = new Map<string, string>()
+  , updates: Update[] = []
 
   for await (const item of imports) {
     try {
@@ -17,7 +18,10 @@ export async function createUpdates(imports: AsyncIterableIterator<Import>): Pro
 
       , name = await registry.getName(url)
       , fromVersion = await registry.getCurrentVersion(url)
-      , toVersion = await registry.getNextVersion(name)
+      , toVersion = cache.get(`${registry.name}:${name}`) ?? await registry.getNextVersion(name)
+
+      if (!cache.has(`${registry.name}:${name}`))
+        cache.set(`${registry.name}:${name}`, toVersion)
 
       if (
         fromVersion.replace('v', '') === toVersion.replace('v', '') ||
