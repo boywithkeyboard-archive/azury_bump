@@ -3,7 +3,7 @@ import registries from './registries.ts'
 import type { Update } from './Update.d.ts'
 
 export async function createMarkdown(updates: Update[]) {
-  let markdown = '### bump:\n'
+  let markdown = '### 🎉🎊🥳 bump 🎉🎊🥳\n'
 
   const sortedUpdates: Record<string, Update[]> = {}
 
