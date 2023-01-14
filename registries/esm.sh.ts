@@ -37,5 +37,15 @@ export default new Registry({
   },
   getNextVersionUrl(name, version) {
     return `https://npmjs.com/package/${name}/v/${version}`
+  },
+  async getRepository(name) {
+    const res = await fetch(`https://registry.npmjs.org/${name}`)
+      
+    if (!res.ok)
+      return undefined
+
+    const json = await res.json()
+
+    return json.versions[json['dist-tags'].latest].repository.url.replace('git+', '').replace('.git', '')
   }
 })

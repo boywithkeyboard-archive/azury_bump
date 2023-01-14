@@ -13,6 +13,8 @@ export class Registry {
   public getCurrentVersionUrl
   // create next version url (used by createMarkdown())
   public getNextVersionUrl
+  // get github repository (used by createMarkdown())
+  public getRepository
 
   constructor(opts: {
     name: string
@@ -23,6 +25,7 @@ export class Registry {
     getPackageUrl: (name: string) => string
     getCurrentVersionUrl: (name: string, version: string) => string
     getNextVersionUrl: (name: string, version: string) => string
+    getRepository: (name: string) => Promise<string | undefined> | string | undefined
   }) {
     this.name = opts.name
     this.prefix = opts.prefix ?? opts.name
@@ -32,5 +35,6 @@ export class Registry {
     this.getPackageUrl = opts.getPackageUrl
     this.getCurrentVersionUrl = opts.getCurrentVersionUrl
     this.getNextVersionUrl = opts.getNextVersionUrl
+    this.getRepository = opts.getRepository
   }
 }

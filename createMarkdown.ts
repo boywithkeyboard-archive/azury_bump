@@ -2,7 +2,7 @@ import { gte, lte } from 'https://deno.land/std@v0.172.0/semver/mod.ts'
 import registries from './registries.ts'
 import type { Update } from './Update.d.ts'
 
-export function createMarkdown(updates: Update[]) {
+export async function createMarkdown(updates: Update[]) {
   let markdown = '### bump:\n'
 
   const sortedUpdates: Record<string, Update[]> = {}
@@ -49,7 +49,11 @@ export function createMarkdown(updates: Update[]) {
     for (const update of updates) {
       const registry = registries.filter(registry => registry.name === update.registry)[0]
       
-      markdown += `  - [**${update.package}**](${registry.getPackageUrl(update.package)}) × [\`${update.fromVersion}\`](${registry.getCurrentVersionUrl(update.package, update.fromVersion)}) » [\`${update.toVersion}\`](${registry.getNextVersionUrl(update.package, update.toVersion)}) ***(${update.fileCount} ${update.fileCount > 1 ? 'files' : 'file'})*** ${update.breaking ? '⚠️' : ''}\n`
+      try {
+        markdown += `  - [**${update.package}**](${await registry.getRepository(update.package)}) × [\`${update.fromVersion}\`](${registry.getCurrentVersionUrl(update.package, update.fromVersion)}) » [\`${update.toVersion}\`](${registry.getNextVersionUrl(update.package, update.toVersion)}) ***(${update.fileCount} ${update.fileCount > 1 ? 'files' : 'file'})*** ${update.breaking ? '⚠️' : ''}\n`
+      } catch (_err) {
+        continue
+      }
     }
   }
 

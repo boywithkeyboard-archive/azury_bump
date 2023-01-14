@@ -27,5 +27,13 @@ export default new Registry({
   },
   getNextVersionUrl(name, version) {
     return `https://deno.land/x/${name}@${version}`
+  },
+  async getRepository(name) {
+    const res = await fetch(`https://apiland.deno.dev/v2/metrics/modules/${name}`)
+
+    if (!res.ok)
+      return undefined
+
+    return `https://github.com/${(await res.json()).upload_options.repository}`
   }
 })

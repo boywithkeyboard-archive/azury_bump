@@ -27,5 +27,8 @@ export default new Registry({
   },
   getNextVersionUrl(_name, version) {
     return `https://deno.land/std@${version}`
+  },
+  getRepository() {
+    return 'https://github.com/denoland/deno_std'
   }
 })
