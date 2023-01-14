@@ -46,10 +46,11 @@ export function createMarkdown(updates: Update[]) {
 
     markdown += `\n- **${registryName}**\n\n`
 
-    const registry = registries.filter(registry => registry.name === registryName)[0]
-
-    for (const update of updates)
+    for (const update of updates) {
+      const registry = registries.filter(registry => registry.name === update.registry)[0]
+      
       markdown += `  - [**${update.package}**](${registry.getPackageUrl(update.package)}) × [\`${update.fromVersion}\`](${registry.getCurrentVersionUrl(update.package, update.fromVersion)}) » [\`${update.toVersion}\`](${registry.getNextVersionUrl(update.package, update.toVersion)}) ***(${update.fileCount} ${update.fileCount > 1 ? 'files' : 'file'})*** ${update.breaking ? '⚠️' : ''}\n`
+    }
   }
 
   return markdown
