@@ -18,8 +18,8 @@ export async function createMarkdown(updates: Update[]) {
     const filteredUpdates: Update[] = []
 
     for (const update of updates) {
-      const exists = filteredUpdates.find(item => item.package === update.package)
-      const existsIndex = filteredUpdates.findIndex(item => item.package === update.package)
+      const exists = filteredUpdates.find(item => item.package === update.package && item.registry === update.registry)
+      const existsIndex = filteredUpdates.findIndex(item => item.package === update.package && item.registry === update.registry)
 
       if (exists) {
         update.fileCount = exists.file === update.file ? filteredUpdates[existsIndex].fileCount : (filteredUpdates[existsIndex].fileCount + 1)
@@ -47,11 +47,12 @@ export async function createMarkdown(updates: Update[]) {
     markdown += `\n- **${registryName}**\n\n`
 
     for (const update of updates) {
-      const registry = registries.filter(registry => registry.name === update.registry)[0]
-      
       try {
+        const registry = registries.filter(registry => registry.name === update.registry)[(update.package !== 'std' && update.registry === 'deno.land') ? 1 : 0]
+
         markdown += `  - [**${update.package}**](${await registry.getRepository(update.package)}) × [\`${update.fromVersion}\`](${registry.getCurrentVersionUrl(update.package, update.fromVersion)}) » [\`${update.toVersion}\`](${registry.getNextVersionUrl(update.package, update.toVersion)}) ***(${update.fileCount} ${update.fileCount > 1 ? 'files' : 'file'})*** ${update.breaking ? '⚠️' : ''}\n`
       } catch (_err) {
+        console.log(_err)
         continue
       }
     }

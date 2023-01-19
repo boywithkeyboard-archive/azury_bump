@@ -34,6 +34,6 @@ export default new Registry({
     if (!res.ok)
       return undefined
 
-    return `https://github.com/${(await res.json()).upload_options.repository}`
+    return `https://github.com/${(await res.json()).info.upload_options.repository}`
   }
 })
