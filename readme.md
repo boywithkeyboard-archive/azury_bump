@@ -1,14 +1,14 @@
 ## bump
 
-#### Add this workflow to your repository to bump your dependencies:
+### Workflow
 
-```
+```yml
 name: 'bump'
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '0 6 * * *' // 6am, daily
 
 jobs:
   bump:
@@ -31,7 +31,7 @@ jobs:
           rm dependencies_changelog.md
 
       - name: 'create pull request'
-        uses: 'peter-evans/create-pull-request@v4.2.3'
+        uses: 'peter-evans/create-pull-request@v4'
         with:
           title: 'bump dependencies'
           author: 'GitHub <noreply@github.com>'
@@ -42,7 +42,7 @@ jobs:
           branch: 'bump'
 ```
 
-### Supported Registries:
+### Registries
 
   - [**deno.gg**](https://deno.gg)
   - [**deno.land**](https://deno.land)
