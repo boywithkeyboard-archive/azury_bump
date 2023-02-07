@@ -1,5 +1,6 @@
 import { gte, lte } from 'https://deno.land/std@v0.177.0/semver/mod.ts'
 import registries from './registries.ts'
+import { version } from './version.ts'
 import type { Update } from './Update.d.ts'
 
 export async function createMarkdown(updates: Update[]) {
@@ -56,7 +57,7 @@ export async function createMarkdown(updates: Update[]) {
       }
     }
 
-    markdown += `\n\n###### © 2023 - [azury's bump](https://github.com/azurystudio/bump)`
+    markdown += `\n\n###### [azury's bump](https://github.com/azurystudio/bump) × ${version}`
   }
 
   return markdown
