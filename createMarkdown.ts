@@ -55,6 +55,8 @@ export async function createMarkdown(updates: Update[]) {
         continue
       }
     }
+
+    markdown += `\n\n###### © 2023 - [azury's bump](https://github.com/azurystudio/bump)`
   }
 
   return markdown

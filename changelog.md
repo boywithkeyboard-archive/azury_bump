@@ -1,3 +1,7 @@
+## v0.2.1
+
+* project is now protected under German Copyright Law
+
 ## v0.2.0
 
 * add **cdn.jsdelivr.net** registry

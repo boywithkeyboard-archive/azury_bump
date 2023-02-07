@@ -74,3 +74,6 @@ jobs:
     ```
     https://raw.githubusercontent.com/org/repo/tag/...
     ```
+
+
+###### © 2023 - Samuel Kopp. All rights reserved. You may ***not*** reproduce, distribute, or create derivative works from this project.
