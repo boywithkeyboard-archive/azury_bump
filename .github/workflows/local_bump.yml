@@ -1,4 +1,4 @@
-name: 'bump'
+name: 'local_bump'
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     - cron: '0 4 * * *' # 4am, daily
 
 jobs:
-  bump:
+  local_bump:
     uses: 'azurystudio/bump/.github/workflows/bump.yml@dev'
     with:
       reviewers: 'unvented'
