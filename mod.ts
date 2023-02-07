@@ -15,7 +15,8 @@ async function cli() {
 
   await update(updates)
 
-  await Deno.stdout.write(new TextEncoder().encode(await createMarkdown(updates)))
+  await Deno.create(join(Deno.cwd(), './dependencies_changelog.md'))
+  await Deno.writeTextFile(join(Deno.cwd(), './dependencies_changelog.md'), await createMarkdown(updates))
 
   Deno.exit()
 }
