@@ -50,7 +50,7 @@ export async function createMarkdown(updates: Update[]) {
       try {
         const registry = registries.filter(registry => registry.name === update.registry)[(update.package !== 'std' && update.registry === 'deno.land') ? 1 : 0]
 
-        markdown += `  - [**${update.package}**](${await registry.getRepository(update.package, update.url)}) × [\`${update.fromVersion}\`](${registry.getCurrentVersionUrl(update.package, update.fromVersion, update.url)}) *to* [\`${update.toVersion}\`](${registry.getNextVersionUrl(update.package, update.toVersion, update.url)}) *in ${update.fileCount} ${update.fileCount > 1 ? 'files' : 'file'}* ${update.breaking ? '⚠️' : ''}\n`
+        markdown += `  - [**${update.package}**](${await registry.getRepository(update.package, update.url)}) *from* [\`${update.fromVersion}\`](${registry.getCurrentVersionUrl(update.package, update.fromVersion, update.url)}) *to* [\`${update.toVersion}\`](${registry.getNextVersionUrl(update.package, update.toVersion, update.url)}) *in ${update.fileCount} ${update.fileCount > 1 ? 'files' : 'file'}* ${update.breaking ? '⚠️' : ''}\n`
       } catch (_err) {
         continue
       }
