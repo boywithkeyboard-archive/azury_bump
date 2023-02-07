@@ -1,4 +1,4 @@
-import { difference, valid } from 'https://deno.land/std@v0.173.0/semver/mod.ts'
+import { difference, valid } from 'https://deno.land/std@v0.177.0/semver/mod.ts'
 import registries from './registries.ts'
 import type { Update } from './Update.d.ts'
 import type { Import } from './Import.d.ts'
