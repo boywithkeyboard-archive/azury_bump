@@ -1,6 +1,6 @@
-## v0.2.1
+## v0.2.2
 
-* project is now protected under German Copyright Law
+* change license to *Apache-2.0*
 
 ## v0.2.0
 
