@@ -7,7 +7,7 @@ on:
 
 jobs:
   bump:
-    uses: 'azurystudio/bump@dev/.github/workflows/bump.yml'
+    uses: 'azurystudio/bump/.github/workflows/bump.yml@dev'
     with:
       reviewers: 'unvented'
     secrets:

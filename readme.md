@@ -12,7 +12,7 @@ on:
 
 jobs:
   bump:
-    uses: 'azurystudio/bump@v0/.github/workflows/bump.yml'
+    uses: 'azurystudio/bump/.github/workflows/bump.yml@v0'
     with:
       reviewers: 'YOUR USERNAME'
     secrets:
