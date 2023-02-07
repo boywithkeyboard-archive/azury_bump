@@ -1,4 +1,4 @@
-import { difference } from 'https://deno.land/std@v0.173.0/semver/mod.ts'
+import { difference, valid } from 'https://deno.land/std@v0.173.0/semver/mod.ts'
 import registries from './registries.ts'
 import type { Update } from './Update.d.ts'
 import type { Import } from './Import.d.ts'
@@ -18,7 +18,11 @@ export async function createUpdates(imports: AsyncIterableIterator<Import>): Pro
 
       , name = await registry.getName(url)
       , fromVersion = await registry.getCurrentVersion(url)
-      , toVersion = cache.get(`${registry.name}:${name}`) ?? await registry.getNextVersion(name)
+
+      if (!valid(fromVersion.replace('v', '')))
+        continue
+
+      const toVersion = cache.get(`${registry.name}:${name}`) ?? await registry.getNextVersion(name, url)
 
       if (!cache.has(`${registry.name}:${name}`))
         cache.set(`${registry.name}:${name}`, toVersion)

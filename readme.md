@@ -8,42 +8,69 @@ name: 'bump'
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 6 * * *' # 6am, daily
+    - cron: '0 4 * * *' # 4am, daily
 
 jobs:
   bump:
-    runs-on: 'ubuntu-latest'
-
-    steps:
-      - uses: 'actions/checkout@v3'
-
-      - uses: 'denoland/setup-deno@v1'
-        with:
-          deno-version: 'v1.x'
-
-      - name: 'bump dependencies'
-        run: |
-          deno run -A https://deno.gg/bump@v0
-          CHANGELOG=$(cat dependencies_changelog.md)
-          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
-          echo "$CHANGELOG" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-          rm dependencies_changelog.md
-
-      - name: 'create pull request'
-        uses: 'peter-evans/create-pull-request@v4'
-        with:
-          title: 'bump dependencies'
-          author: 'GitHub <noreply@github.com>'
-          commit-message: 'bump dependencies'
-          body: '${{ env.CHANGELOG }}'
-          labels: 'dependencies'
-          delete-branch: true
-          branch: 'bump'
+    uses: 'azurystudio/bump@v0/.github/workflows/bump.yml'
+    with:
+      reviewers: 'YOUR USERNAME'
+    secrets:
+      token: '${{ secrets.GITHUB_TOKEN }}'
 ```
 
 ### Registries
 
-  - [**deno.gg**](https://deno.gg)
+  - [**cdn.jsdelivr.net**](https://cdn.jsdelivr.net)
+
+    ```
+    https://cdn.jsdelivr.net/npm/@scope/package@v0.0.0/...
+    ```
+    ```
+    https://cdn.jsdelivr.net/npm/package@v0.0.0/...
+    ```
+    ```
+    https://cdn.jsdelivr.net/gh/org/repo@v0.0.0/...
+    ```
+
+  - [**cdn.skypack.dev**](https://cdn.skypack.dev)
+
+    ```
+    https://cdn.skypack.dev/@scope/package@v0.0.0/...
+    ```
+    ```
+    https://cdn.skypack.dev/package@v0.0.0/...
+    ```
+
   - [**deno.land**](https://deno.land)
+
+    ```
+    https://deno.land/std@v0.0.0/...
+    ```
+    ```
+    https://deno.land/x/package@v0.0.0/...
+    ```
+
+  - [**esm.run**](https://esm.run)
+
+    ```
+    https://esm.run/@scope/package@v0.0.0/...
+    ```
+    ```
+    https://esm.run/package@v0.0.0/...
+    ```
+
   - [**esm.sh**](https://esm.sh)
+
+    ```
+    https://esm.sh/@scope/package@v0.0.0/...
+    ```
+    ```
+    https://esm.sh/package@v0.0.0/...
+    ```
+
+  - [**raw.githubusercontent.com**](https://raw.githubusercontent.com)
+
+    ```
+    https://raw.githubusercontent.com/org/repo/tag/...
+    ```

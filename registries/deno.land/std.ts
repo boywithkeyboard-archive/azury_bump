@@ -19,9 +19,6 @@ export default new Registry({
 
     return json.latest_version.startsWith('v') ? json.latest_version : `v${json.latest_version}`
   },
-  getPackageUrl() {
-    return 'https://deno.land/std'
-  },
   getCurrentVersionUrl(_name, version) {
     return `https://deno.land/std@${version}`
   },

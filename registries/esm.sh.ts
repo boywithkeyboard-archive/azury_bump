@@ -29,9 +29,6 @@ export default new Registry({
 
     return (await res.json())['dist-tags'].latest
   },
-  getPackageUrl(name) {
-    return `https://npmjs.com/package/${name}`
-  },
   getCurrentVersionUrl(name, version) {
     return `https://npmjs.com/package/${name}/v/${version}`
   },
