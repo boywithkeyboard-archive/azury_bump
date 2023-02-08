@@ -52,11 +52,11 @@ jobs:
           branch: 'bump'
 
       - id: 'commit'
-        if: '${{ inputs.test != '' }}'
+        if: '${{ inputs.test != "" }}'
         run: |
           echo "::set-output name=sha::$(git rev-parse HEAD)"
       
-      - if: '${{ inputs.test != '' }}'
+      - if: '${{ inputs.test != "" }}'
         uses: 'Sibz/github-status-action@v1'
         with:
           authToken: '${{ secrets.token }}'
@@ -67,11 +67,11 @@ jobs:
       - name: 'test updates'
         id: 'test'
         continue-on-error: true
-        if: '${{ inputs.test != '' }}'
+        if: '${{ inputs.test != "" }}'
         run: '${{ inputs.test }}'
 
       - name: 'set commit status with outcome'
-        if: '${{ inputs.test != '' }}'
+        if: '${{ inputs.test != "" }}'
         uses: 'Sibz/github-status-action@v1'
         with:
           authToken: '${{ secrets.token }}'
