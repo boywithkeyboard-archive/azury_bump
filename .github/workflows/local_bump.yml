@@ -9,7 +9,6 @@ jobs:
   local_bump:
     uses: 'azurystudio/bump/.github/workflows/bump.yml@dev'
     with:
-      assignees: 'unvented'
       reviewers: 'unvented'
     secrets:
       token: '${{ secrets.GITHUB_TOKEN }}'
