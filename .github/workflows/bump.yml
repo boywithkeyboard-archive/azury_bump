@@ -10,10 +10,6 @@ on:
       reviewers:
         required: true
         type: 'string'
-      test:
-        default: ''
-        required: false
-        type: 'string'
     secrets:
       token:
         required: true
@@ -50,31 +46,3 @@ jobs:
           labels: 'dependencies'
           delete-branch: true
           branch: 'bump'
-
-      - id: 'commit'
-        if: '${{ inputs.test != "" }}'
-        run: |
-          echo "::set-output name=sha::$(git rev-parse HEAD)"
-      
-      - if: '${{ inputs.test != "" }}'
-        uses: 'Sibz/github-status-action@v1'
-        with:
-          authToken: '${{ secrets.token }}'
-          context: 'test updates'
-          state: 'pending'
-          sha: '${{ steps.commit.outputs.sha }}'
-
-      - name: 'test updates'
-        id: 'test'
-        continue-on-error: true
-        if: '${{ inputs.test != "" }}'
-        run: '${{ inputs.test }}'
-
-      - name: 'set commit status with outcome'
-        if: '${{ inputs.test != "" }}'
-        uses: 'Sibz/github-status-action@v1'
-        with:
-          authToken: '${{ secrets.token }}'
-          context: 'test updates'
-          state: '${{ steps.test.outcome }}'
-          sha: '${{ steps.commit.outputs.sha }}'
