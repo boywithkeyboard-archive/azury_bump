@@ -14,10 +14,13 @@ jobs:
   bump:
     uses: 'azurystudio/bump/.github/workflows/bump.yml@v0'
     with:
-      reviewers: 'YOUR USERNAME'
+      assignees: 'USERNAME' # optional
+      reviewers: 'USERNAME'
     secrets:
       token: '${{ secrets.GITHUB_TOKEN }}'
 ```
+
+*`assignees` and `reviewers` options are the same as defined in [peter-evans/create-pull-request](https://github.com/peter-evans/create-pull-request).*
 
 ### Registries
 

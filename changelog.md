@@ -1,3 +1,7 @@
+## v0.2.3
+
+* add `assignees` option to workflow
+
 ## v0.2.2
 
 * change license to *Apache-2.0*
