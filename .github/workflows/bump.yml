@@ -11,7 +11,7 @@ on:
         required: true
         type: 'string'
       test:
-        default: 'deno test -A --fail-fast'
+        default: ''
         required: false
         type: 'string'
     secrets:
@@ -52,10 +52,12 @@ jobs:
           branch: 'bump'
 
       - id: 'commit'
+        if: '${{ inputs.test != '' }}'
         run: |
           echo "::set-output name=sha::$(git rev-parse HEAD)"
       
-      - uses: 'Sibz/github-status-action@v1'
+      - if: '${{ inputs.test != '' }}'
+        uses: 'Sibz/github-status-action@v1'
         with:
           authToken: '${{ secrets.token }}'
           context: 'test updates'
@@ -65,9 +67,11 @@ jobs:
       - name: 'test updates'
         id: 'test'
         continue-on-error: true
+        if: '${{ inputs.test != '' }}'
         run: '${{ inputs.test }}'
 
       - name: 'set commit status with outcome'
+        if: '${{ inputs.test != '' }}'
         uses: 'Sibz/github-status-action@v1'
         with:
           authToken: '${{ secrets.token }}'
