@@ -1,0 +1,49 @@
+name: 'bump'
+
+on:
+  workflow_call:
+    inputs:
+      assignees:
+        default: ''
+        required: false
+        type: 'string'
+      reviewers:
+        required: true
+        type: 'string'
+    secrets:
+      token:
+        required: true
+
+jobs:
+  bump:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      - uses: 'actions/checkout@v3'
+
+      - uses: 'denoland/setup-deno@v1'
+        with:
+          deno-version: 'v1.x'
+
+      - name: 'bump dependencies'
+        run: |
+          deno run -A https://raw.githubusercontent.com/azurystudio/bump/dev/mod.ts
+          CHANGELOG=$(cat dependencies_changelog.md)
+          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
+          echo "$CHANGELOG" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+          rm dependencies_changelog.md
+
+      - name: 'create pull request'
+        uses: 'peter-evans/create-pull-request@v4'
+        with:
+          assignees: '${{ inputs.assignees }}'
+          reviewers: '${{ inputs.reviewers }}'
+          token: '${{ secrets.token }}'
+          title: 'bump dependencies'
+          author: 'GitHub <noreply@github.com>'
+          commit-message: 'bump dependencies'
+          body: '${{ env.CHANGELOG }}'
+          labels: 'dependencies'
+          delete-branch: true
+          branch: 'bump'
