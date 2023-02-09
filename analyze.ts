@@ -16,19 +16,12 @@ export async function* analyze(directory: string, ignore: string[] = []): AsyncI
       if (url.includes('${'))
         continue
 
-      
-      console.log('1. ' + url)
-
       for (const registry of registries)
         if (url === `https://${registry.prefix}`)
           continue
 
-      console.log('2. ' + url)
-
       if (!registries.some(registry => url.startsWith(`https://${registry.prefix}`)))
         continue
-
-      console.log('3. ' + url)
 
       yield {
         url,

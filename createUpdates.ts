@@ -21,8 +21,6 @@ export async function createUpdates(imports: AsyncIterableIterator<Import>): Pro
       , name = await registry.getName(url)
       , fromVersion = await registry.getCurrentVersion(url)
 
-      console.log(`${name} ${fromVersion}`)
-
       if (!valid(fromVersion.replace('v', '')))
         continue
 
@@ -56,9 +54,7 @@ export async function createUpdates(imports: AsyncIterableIterator<Import>): Pro
         breaking: breaking === 'major',
         fileCount: 1
       })
-    } catch (err) {
-      console.log(err)
-
+    } catch (_err) {
       continue
     }
   }
