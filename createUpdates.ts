@@ -21,6 +21,8 @@ export async function createUpdates(imports: AsyncIterableIterator<Import>): Pro
       , name = await registry.getName(url)
       , fromVersion = await registry.getCurrentVersion(url)
 
+      console.log(`name: ${name} ---- version: ${fromVersion}`)
+
       if (!valid(fromVersion.replace('v', '')))
         continue
 
