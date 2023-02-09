@@ -1,4 +1,6 @@
 import { difference, valid } from 'https://deno.land/std@v0.177.0/semver/mod.ts'
+import { gray, white, strikethrough } from 'https://deno.land/std@v0.177.0/fmt/colors.ts'
+import { log } from 'https://deno.land/x/drgn@v0.5.3/mod.ts'
 import registries from './registries.ts'
 import type { Update } from './Update.d.ts'
 import type { Import } from './Import.d.ts'
@@ -32,10 +34,15 @@ export async function createUpdates(imports: AsyncIterableIterator<Import>): Pro
         toVersion.includes('rc') ||
         toVersion.includes('alpha') ||
         toVersion.includes('beta')
-      )
+      ) {
+        await log(gray(`${name} × ${white(toVersion)} (no change)\n`))
+
         continue
+      }
 
       const breaking = difference(fromVersion.replace('v', ''), toVersion.replace('v', ''))
+
+      await log(gray(`${name} × ${strikethrough(fromVersion)} → ${white(toVersion)}\n`))
 
       updates.push({
         registry: registry.name,
