@@ -55,6 +55,7 @@ export async function createUpdates(imports: AsyncIterableIterator<Import>): Pro
         fileCount: 1
       })
     } catch (_err) {
+      console.log(_err)
       continue
     }
   }
