@@ -25,7 +25,7 @@ export default new Registry({
     const res = await fetch(`https://registry.npmjs.org/${name}`)
       
     if (!res.ok)
-      throw new Error()
+      throw new Error('esm.sh fetch error')
 
     return (await res.json())['dist-tags'].latest
   },

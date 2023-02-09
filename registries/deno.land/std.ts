@@ -13,7 +13,7 @@ export default new Registry({
     const res = await fetch('https://apiland.deno.dev/v2/modules/std')
 
     if (!res.ok)
-      throw new Error()
+      throw new Error('deno.land/std fetch error')
 
     const json = await res.json()
 

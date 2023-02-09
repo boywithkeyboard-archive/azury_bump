@@ -25,7 +25,7 @@ export default new Registry({
     const res = await fetch(`https://registry.npmjs.org/${name}`)
       
     if (!res.ok)
-      throw new Error()
+      throw new Error('cdn.skypack.dev fetch error')
 
     return `v${(await res.json())['dist-tags'].latest}`
   },

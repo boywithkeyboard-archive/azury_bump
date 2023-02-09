@@ -39,7 +39,7 @@ export default new Registry({
       const res = await fetch(`https://api.github.com/repos/${name}/releases`)
       
       if (!res.ok)
-        throw new Error()
+        throw new Error('cdn.jsdelivr.net fetch error')
 
       return (await res.json())[0].tag_name
     }
