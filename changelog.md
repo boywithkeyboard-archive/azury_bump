@@ -1,3 +1,8 @@
+## v0.2.4
+
+* add missing registry imports
+* fix handling of cdn.skypack.dev imports
+
 ## v0.2.3
 
 * add `assignees` option to workflow
