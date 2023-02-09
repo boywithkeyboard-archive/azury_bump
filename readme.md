@@ -16,6 +16,7 @@ jobs:
     with:
       assignees: 'USERNAME' # optional
       reviewers: 'USERNAME'
+      test: 'deno -A test' # optional, default: `deno lint`
     secrets:
       token: '${{ secrets.GITHUB_TOKEN }}'
 ```
