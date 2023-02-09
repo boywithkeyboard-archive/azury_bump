@@ -16,9 +16,9 @@ export default new Registry({
     const scopedPackage = url.split('/')[1].split('@')[0].length === 0
 
     return scopedPackage ? (
-      url.split('/')[2].split('@')[1]
+      url.split('/')[2].split('@')[1].includes('?') ? url.split('/')[2].split('@')[1].split('?')[0] : url.split('/')[2].split('@')[1]
     ) : (
-      url.split('/')[1].split('@')[1]
+      url.split('/')[1].split('@')[1].includes('?') ? url.split('/')[1].split('@')[1].split('?')[0] : url.split('/')[1].split('@')[1]
     )
   },
   async getNextVersion(name) {

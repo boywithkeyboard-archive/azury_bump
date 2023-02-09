@@ -54,8 +54,9 @@ export async function createUpdates(imports: AsyncIterableIterator<Import>): Pro
         breaking: breaking === 'major',
         fileCount: 1
       })
-    } catch (_err) {
-      console.log(_err)
+    } catch (err) {
+      console.error(err)
+
       continue
     }
   }
