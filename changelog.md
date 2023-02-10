@@ -1,3 +1,7 @@
+## v0.2.6
+
+* revert addition of `test` option
+
 ## v0.2.4
 
 * add missing registry imports
