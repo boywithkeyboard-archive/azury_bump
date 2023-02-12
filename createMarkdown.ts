@@ -56,9 +56,9 @@ export async function createMarkdown(updates: Update[]) {
         continue
       }
     }
-
-    markdown += `\n\n###### [azury's bump](https://github.com/azurystudio/bump) × ${version}`
   }
+
+  markdown += `\n\n###### [azury's bump](https://github.com/azurystudio/bump) × ${version}`
 
   return markdown
 }

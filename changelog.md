@@ -1,3 +1,7 @@
+## v0.2.7
+
+* fix multiple footer lines in changelog
+
 ## v0.2.6
 
 * revert addition of `test` option
