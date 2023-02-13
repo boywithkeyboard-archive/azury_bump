@@ -1,6 +1,6 @@
-## v0.2.7
+## v0.2.8
 
-* fix multiple footer lines in changelog
+* remove footer line in changelog
 
 ## v0.2.6
 
