@@ -27,7 +27,7 @@ export default new Registry({
     if (!res.ok)
       throw new Error('cdn.skypack.dev fetch error')
 
-    return `v${(await res.json())['dist-tags'].latest}`
+    return (await res.json())['dist-tags'].latest
   },
   getCurrentVersionUrl(name, version) {
     return `https://npmjs.com/package/${name}/v/${version}`

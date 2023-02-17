@@ -1,3 +1,7 @@
+## v0.2.9
+
+* remove `v` from version tags in **cdn.skypack.dev** imports because they seem to cause a redirect
+
 ## v0.2.8
 
 * remove footer line in changelog
