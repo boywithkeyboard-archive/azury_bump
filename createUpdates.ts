@@ -1,6 +1,6 @@
 import { difference, valid } from 'https://deno.land/std@v0.177.0/semver/mod.ts'
 import { gray, white, strikethrough, italic, brightGreen, brightBlue } from 'https://deno.land/std@v0.177.0/fmt/colors.ts'
-import { log } from 'https://deno.land/x/drgn@v0.5.3/mod.ts'
+import { log } from 'https://deno.land/x/drgn@v0.7.0/mod.ts'
 import registries from './registries.ts'
 import type { Update } from './Update.d.ts'
 import type { Import } from './Import.d.ts'
