@@ -1,3 +1,7 @@
+## v0.2.10
+
+* ignore releases that contain the words **canary**, **unstable** or **nightly**
+
 ## v0.2.9
 
 * remove `v` from version tags in **cdn.skypack.dev** imports because they seem to cause a redirect
