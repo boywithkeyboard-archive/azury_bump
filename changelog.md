@@ -1,3 +1,7 @@
+## v0.2.11
+
+* make sure to update `?pin` query parameter in **esm.sh** imports
+
 ## v0.2.10
 
 * ignore releases that contain the words **canary**, **unstable** or **nightly**
