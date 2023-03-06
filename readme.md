@@ -16,6 +16,7 @@ jobs:
     with:
       assignees: 'USERNAME' # optional
       reviewers: 'USERNAME'
+      tokens: '${{ secrets.TOKEN }}@raw.githubusercontent.com' # optional (for private github repositories)
     secrets:
       token: '${{ secrets.GITHUB_TOKEN }}'
 ```

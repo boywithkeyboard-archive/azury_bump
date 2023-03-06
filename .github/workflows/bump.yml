@@ -10,6 +10,10 @@ on:
       reviewers:
         required: true
         type: 'string'
+      tokens:
+        default: ''
+        required: false
+        type: 'string'
     secrets:
       token:
         required: true
@@ -26,6 +30,8 @@ jobs:
           deno-version: 'v1.x'
 
       - name: 'bump dependencies'
+        env:
+          bump_tokens: '${{ inputs.tokens }}'
         run: |
           deno run -A https://raw.githubusercontent.com/azurystudio/bump/v0/mod.ts
           CHANGELOG=$(cat dependencies_changelog.md)

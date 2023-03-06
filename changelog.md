@@ -1,3 +1,7 @@
+## v0.3.0
+
+* add option to set a token to look for updates for private repositories
+
 ## v0.2.11
 
 * make sure to update `?pin` query parameter in **esm.sh** imports

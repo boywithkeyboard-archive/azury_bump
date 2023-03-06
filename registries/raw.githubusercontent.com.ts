@@ -1,4 +1,5 @@
 import { Registry } from '../Registry.ts'
+import { parseTokens } from '../parseTokens.ts'
 
 export default new Registry({
   name: 'raw.githubusercontent.com',
@@ -9,7 +10,15 @@ export default new Registry({
     return url.split('/')[3]
   },
   async getNextVersion(name) {
-    const res = await fetch(`https://api.github.com/repos/${name}/releases`)
+    const token = parseTokens()['raw.githubusercontent.com']
+
+    const res = await fetch(`https://api.github.com/repos/${name}/releases`, {
+      ...(token && {
+        headers: {
+          authorization: `bearer ${token}`
+        }
+      })
+    })
       
     if (!res.ok)
       throw new Error('raw.githubusercontent.com fetch error')
