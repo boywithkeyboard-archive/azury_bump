@@ -16,9 +16,9 @@ jobs:
     with:
       assignees: 'USERNAME' # optional
       reviewers: 'USERNAME'
-      tokens: '${{ secrets.TOKEN }}@raw.githubusercontent.com' # optional (for private github repositories)
     secrets:
       token: '${{ secrets.GITHUB_TOKEN }}'
+      tokens: '${{ secrets.TOKEN }}@raw.githubusercontent.com' # optional (for private github repositories)
 ```
 
 *`assignees` and `reviewers` options are the same as defined in [peter-evans/create-pull-request](https://github.com/peter-evans/create-pull-request).*
