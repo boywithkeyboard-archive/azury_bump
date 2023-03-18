@@ -36,7 +36,8 @@ export async function createUpdates(imports: AsyncIterableIterator<Import>): Pro
         toVersion.includes('beta') ||
         toVersion.includes('unstable') ||
         toVersion.includes('canary') ||
-        toVersion.includes('nightly')
+        toVersion.includes('nightly') ||
+        toVersion.includes('dev')
       ) {
         await log(gray(`${white(name)} × ${toVersion} ${italic(brightBlue('(skipped)'))}\n`))
 
