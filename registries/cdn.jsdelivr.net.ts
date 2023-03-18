@@ -45,10 +45,10 @@ export default new Registry({
     }
   },
   getCurrentVersionUrl(name, version, url) {
-    return url.startsWith('cdn.jsdelivr.net/npm') ? `https://npmjs.com/package/${name}/v/${version}` : `https://github.com/${name}/releases/tag/${version}`
+    return url.includes('cdn.jsdelivr.net/npm') ? `https://npmjs.com/package/${name}/v/${version}` : `https://github.com/${name}/releases/tag/${version}`
   },
   getNextVersionUrl(name, version, url) {
-    return url.startsWith('cdn.jsdelivr.net/npm') ? `https://npmjs.com/package/${name}/v/${version}` : `https://github.com/${name}/releases/tag/${version}`
+    return url.includes('cdn.jsdelivr.net/npm') ? `https://npmjs.com/package/${name}/v/${version}` : `https://github.com/${name}/releases/tag/${version}`
   },
   async getRepository(name, url) {
     if (url.startsWith('cdn.jsdelivr.net/gh'))
