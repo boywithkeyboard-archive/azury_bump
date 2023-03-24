@@ -1,48 +1,47 @@
-import { Registry } from '../Registry.ts'
+import { Registry } from '../Registry.d.ts'
 
-export default new Registry({
-  name: 'cdn.skypack.dev',
-  getName(url) {
+export default <Registry> {
+  displayName: 'cdn.skypack.dev',
+  prefix: 'https://cdn.skypack.dev',
+  name({ url }) {
     const packageName = url
       .split('/')[1]
       .split('@')[0]
 
-    if (packageName.length > 0)
+    if (packageName.length > 0) {
       return packageName
+    }
 
     return url.split('/')[1] + '/' + url.split('/')[2].split('@')[0]
   },
-  getCurrentVersion(url) {
+  currentVersion({ url }) {
     const scopedPackage = url.split('/')[1].split('@')[0].length === 0
 
-    return scopedPackage ? (
-      url.split('/')[2].split('@')[1].includes('?') ? url.split('/')[2].split('@')[1].split('?')[0] : url.split('/')[2].split('@')[1]
-    ) : (
-      url.split('/')[1].split('@')[1].includes('?') ? url.split('/')[1].split('@')[1].split('?')[0] : url.split('/')[1].split('@')[1]
-    )
+    return scopedPackage
+      ? (
+        url.split('/')[2].split('@')[1].includes('?')
+          ? url.split('/')[2].split('@')[1].split('?')[0]
+          : url.split('/')[2].split('@')[1]
+      )
+      : (
+        url.split('/')[1].split('@')[1].includes('?')
+          ? url.split('/')[1].split('@')[1].split('?')[0]
+          : url.split('/')[1].split('@')[1]
+      )
   },
-  async getNextVersion(name) {
+  async nextVersion({ name }) {
     const res = await fetch(`https://registry.npmjs.org/${name}`)
-      
-    if (!res.ok)
+
+    if (!res.ok) {
       throw new Error('cdn.skypack.dev fetch error')
+    }
 
     return (await res.json())['dist-tags'].latest
   },
-  getCurrentVersionUrl(name, version) {
+  currentVersionUrl({ name, version }) {
     return `https://npmjs.com/package/${name}/v/${version}`
   },
-  getNextVersionUrl(name, version) {
+  nextVersionUrl({ name, version }) {
     return `https://npmjs.com/package/${name}/v/${version}`
   },
-  async getRepository(name) {
-    const res = await fetch(`https://registry.npmjs.org/${name}`)
-      
-    if (!res.ok)
-      return undefined
-
-    const json = await res.json()
-
-    return json.versions[json['dist-tags'].latest].repository.url.replace('git+', '').replace('.git', '')
-  }
-})
+}

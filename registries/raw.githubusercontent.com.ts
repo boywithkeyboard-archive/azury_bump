@@ -1,37 +1,27 @@
-import { Registry } from '../Registry.ts'
-import { parseTokens } from '../parseTokens.ts'
+import { Registry } from '../Registry.d.ts'
 
-export default new Registry({
-  name: 'raw.githubusercontent.com',
-  getName(url) {
+export default <Registry> {
+  displayName: 'raw.githubusercontent.com',
+  prefix: 'https://raw.githubusercontent.com',
+  name({ url }) {
     return url.split('/')[1] + '/' + url.split('/')[2] // org/repo
   },
-  getCurrentVersion(url) {
+  currentVersion({ url }) {
     return url.split('/')[3]
   },
-  async getNextVersion(name) {
-    const token = parseTokens()['raw.githubusercontent.com']
+  async nextVersion({ name }) {
+    const res = await fetch(`https://api.github.com/repos/${name}/releases`)
 
-    const res = await fetch(`https://api.github.com/repos/${name}/releases`, {
-      ...(token && {
-        headers: {
-          authorization: `bearer ${token}`
-        }
-      })
-    })
-      
-    if (!res.ok)
+    if (!res.ok) {
       throw new Error('raw.githubusercontent.com fetch error')
+    }
 
     return (await res.json())[0].tag_name
   },
-  getCurrentVersionUrl(name, version) {
+  currentVersionUrl({ name, version }) {
     return `https://github.com/${name}/releases/tag/${version}`
   },
-  getNextVersionUrl(name, version) {
+  nextVersionUrl({ name, version }) {
     return `https://github.com/${name}/releases/tag/${version}`
   },
-  getRepository(name) {
-    return `https://github.com/${name}`
-  }
-})
+}
