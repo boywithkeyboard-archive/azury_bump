@@ -1,5 +1,7 @@
 ## bump
 
+> **Note**: Please take a look at [#20](https://github.com/azurystudio/bump/issues/20) to learn more about the future of bump.
+
 ### Workflow
 
 ```yml
