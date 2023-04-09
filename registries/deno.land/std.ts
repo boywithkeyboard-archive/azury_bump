@@ -1,31 +1,31 @@
-import { Registry } from '../../Registry.d.ts'
+import { Registry } from '../../Registry.ts'
 
-export default <Registry> {
-  displayName: 'deno.land',
-  prefix: 'https://deno.land/std',
-  name() {
+export default new Registry({
+  name: 'deno.land',
+  prefix: 'deno.land/std',
+  getName() {
     return 'std'
   },
-  currentVersion({ url }) {
+  getCurrentVersion(url) {
     return url.split('/')[1].split('@')[1]
   },
-  async nextVersion() {
+  async getNextVersion() {
     const res = await fetch('https://apiland.deno.dev/v2/modules/std')
 
-    if (!res.ok) {
+    if (!res.ok)
       throw new Error('deno.land/std fetch error')
-    }
 
     const json = await res.json()
 
-    return json.latest_version.startsWith('v')
-      ? json.latest_version
-      : `v${json.latest_version}`
+    return json.latest_version.startsWith('v') ? json.latest_version : `v${json.latest_version}`
   },
-  currentVersionUrl({ version }) {
+  getCurrentVersionUrl(_name, version) {
     return `https://deno.land/std@${version}`
   },
-  nextVersionUrl({ version }) {
+  getNextVersionUrl(_name, version) {
     return `https://deno.land/std@${version}`
   },
-}
+  getRepository() {
+    return 'https://github.com/denoland/deno_std'
+  }
+})
