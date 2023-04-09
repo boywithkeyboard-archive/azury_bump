@@ -1,3 +1,7 @@
+## v0.3.2
+
+* do not add a `v` before semver for deno.land/x registry to prevent invalid release tags
+
 ## v0.3.0
 
 * add option to set a token to look for updates for private repositories
