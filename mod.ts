@@ -1,5 +1,5 @@
-import { parse } from 'https://deno.land/std@v0.185.0/flags/mod.ts'
-import { join } from 'https://deno.land/std@v0.185.0/path/mod.ts'
+import { parse } from 'https://deno.land/std@v0.186.0/flags/mod.ts'
+import { join } from 'https://deno.land/std@v0.186.0/path/mod.ts'
 import { analyze } from './analyze.ts'
 import { createMarkdown } from './createMarkdown.ts'
 import { createUpdates } from './createUpdates.ts'
