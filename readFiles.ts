@@ -1,4 +1,4 @@
-import { resolve } from 'https://deno.land/std@v0.186.0/path/mod.ts'
+import { resolve } from 'https://deno.land/std@v0.187.0/path/mod.ts'
 
 export async function* readFiles(dir: string): AsyncIterableIterator<string> {
   const dirents = Deno.readDir(dir)
