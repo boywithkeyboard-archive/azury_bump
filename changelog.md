@@ -1,3 +1,7 @@
+## v0.4.0
+
+* do not add a `v` in version tag for std library
+
 ## v0.3.2
 
 * do not add a `v` before semver for deno.land/x registry to prevent invalid release tags
