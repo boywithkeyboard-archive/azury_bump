@@ -17,7 +17,7 @@ export default new Registry({
 
     const json = await res.json()
 
-    return json.latest_version.startsWith('v') ? json.latest_version : `v${json.latest_version}`
+    return json.latest_version.startsWith('v') ? json.latest_version.slice(1) : json.latest_version
   },
   getCurrentVersionUrl(_name, version) {
     return `https://deno.land/std@${version}`
