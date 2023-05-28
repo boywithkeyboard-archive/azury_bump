@@ -31,7 +31,7 @@ jobs:
         env:
           bump_tokens: '${{ secrets.tokens }}'
         run: |
-          deno run -A https://raw.githubusercontent.com/azurystudio/bump/v0/mod.ts
+          deno run -A https://raw.githubusercontent.com/azurystudio/bump/v0.4.4/mod.ts
           CHANGELOG=$(cat dependencies_changelog.md)
           echo "CHANGELOG<<EOF" >> $GITHUB_ENV
           echo "$CHANGELOG" >> $GITHUB_ENV
