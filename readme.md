@@ -1,5 +1,7 @@
 ## bump
 
+> **Warning**: This project is no longer maintained and will soon be superseded by an improved alternative.
+
 ### Workflow
 
 ```yml
