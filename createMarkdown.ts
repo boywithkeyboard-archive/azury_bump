@@ -1,4 +1,4 @@
-import { gte, lte } from 'https://deno.land/std@v0.187.0/semver/mod.ts'
+import { gte, lte } from 'https://deno.land/std@0.189.0/semver/mod.ts'
 import registries from './registries.ts'
 import type { Update } from './Update.d.ts'
 
