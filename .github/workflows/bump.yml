@@ -8,7 +8,7 @@ on:
         required: false
         type: 'string'
       reviewers:
-        required: true
+        required: false
         type: 'string'
     secrets:
       token:
@@ -42,7 +42,7 @@ jobs:
         uses: 'peter-evans/create-pull-request@v4'
         with:
           assignees: '${{ inputs.assignees }}'
-          reviewers: '${{ inputs.reviewers }}'
+          reviewers: ${{ inputs.reviewers }}
           token: '${{ secrets.token }}'
           title: 'bump dependencies'
           author: 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
