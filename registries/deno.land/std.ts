@@ -1,5 +1,5 @@
 import { Registry } from '../../Registry.ts'
-import { gte, prerelease } from 'https://deno.land/std@v0.187.0/semver/mod.ts'
+import { gte, prerelease } from 'https://deno.land/std@0.189.0/semver/mod.ts'
 
 export default new Registry({
   name: 'deno.land',
