@@ -1,6 +1,6 @@
 ## bump
 
-> **Warning**: This project is no longer maintained and will soon be superseded by an improved alternative.
+> **Warning**: This project is **DEPRECATED**! Please use [upgrade](https://github.com/azurystudio/upgrade) instead.
 
 ### Workflow
 
